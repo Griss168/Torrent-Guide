@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="favicon.ico">
+    <title>Torrentová príručka</title>
+    <link rel="stylesheet" href="styl/all.css">
+    <script src="javascript/all.js"></script>
+
+    <!-- Open Graph tags -->
+    <meta property="og:title" content="Torrentová príručka">
+    <meta property="og:description" content="Príručka o torrentoch, peer-to-peer sieti a správnej konfigurácii.">
+    <meta property="og:image" content="https://netgate.to/tid-T-ooh0Ml001Ft5EmV7Rk3mhK/ipfs/bafybeihnrnfvfwgnabbxklrqu4ycvnbf5gtkz7sqcux7opyws27feg7ww4/preview.png">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="sk_SK">
+</head>
+
+<body>
+    <nav>
+        <ul>
+            <li><a href="#basic" onclick="showTabContent('basic'); return false;">Základ</a></li>
+            <li><a href="#advance" onclick="showTabContent('advance'); return false;">Dobré vedieť</a></li>
+            <li><a href="#howto" onclick="showTabContent('howto'); return false;">Návody</a></li>
+            <li><a href="#downloads" onclick="showTabContent('downloads'); return false;">Na stiahnutie</a></li>
+        </ul>
+    </nav>
+    <div class="container">
+
+        <!-- Obsah pre záložku #basic -->
+        <div id="basic" class="tab-content">
+            <h1>Torrentová príručka</h1>
+            
+            <h2 id="torrents">Čo sú torrenty?</h2>
+            <p><strong><span style="color: #ffd700;">Torrentovanie</span></strong> je spôsob zdieľania súborov medzi užívateľmi cez internet založený na tzv. P2P (peer-to-peer) sieti. To znamená že si súbory uchovávajú a navzájom vymieňajú priamo užívatelia (nie sú uložené na žiadnom servery). Tento spôsob je obľúbený, pretože umožňuje efektívne a rýchlo sťahovať veľké súbory, ako sú filmy, hudba či softvér.</p>
+
+            <h2 id="torrent">Čo je torrent?</h2>
+            <p><strong><span style="color: #ffd700;">Torrent</span></strong> je malý súbor, ktorý obsahuje informácie o tom, kde nájsť požadované dáta (súbor alebo kolekciu súborov) a ako ich získať. Obsahuje údaje ako je veľkosť súborov, ich názov a tiež odkazy na tracker, čo je server, ktorý pomáha koordinovať výmenu dát medzi užívateľmi.</p>
+
+            <h2 id="client">Čo je klient?</h2>
+            <p>Torrent <strong><span style="color: #ffd700;">klient</span></strong> je aplikácia, ktorá umožňuje sťahovanie a zdieľanie súborov v P2P sieti. Slúži tiež na vytváranie torrent súboru z dát ktoré chceme zdieľať.</p>
+            <p>Príklady torrent klienta: qBittorrent, uTorrent, Deluge, Transmission, BiglyBT.</p>
+
+            <h2 id="tracker">Čo je tracker?</h2>
+            <p><strong><span style="color: #ffd700;">Tracker</span></strong> je server, ktorý pomôže nájsť ďalších užívateľov, ktorí majú požadovaný súbor alebo jeho časti a pomáha koordinovať výmenu dát medzi užívateľmi. Tracker iba sprostredkuje kontakty medzi užívateľmi.</p>
+
+            <h2 id="peer">Čo je peer?</h2>
+            <ul>
+                <li><strong><span style="color: #ffd700;">Peer</span></strong> je vo všeobecnosti užívateľ, ktorý zdieľa dáta z torrentu. Táto skupina užívateľov sa ešte zvykne deliť na Seederov a Leecherov.</li>
+                <li><strong><span style="color: #ffd700;">Seeder</span></strong> je užívateľ, ktorý má celý obsah dát z torrentu.</li>
+                <li><strong><span style="color: #ffd700;">Leecher</span></strong> je užívateľ, ktorý nemá celý obsah dát z torrentu.</li>
+            </ul>
+
+            <p>Toto rozdelenie sa vždy vzťahuje k jednému konkrétnemu torrentu. Každý torrent súbor má totiž svoju vlastnú skupinu užívateľov, ktorý daný torrent zdieľajú alebo sťahujú (tzv. <span style="color: #ffd700;">Swarm</span>).</p>
+            
+            <h2 id="howitworks">Ako torrent funguje?</h2>
+            <ol>
+                <li><strong><span style="color: #ffd700;">Torrent:</span></strong> Získame torrent súbor (napr. Sintel.torrent) z nejakej webovej stránky, trackera alebo ľubovolným iným spôsobom. Tento súbor otvoríme pomocou klienta.</li>
+                <li><strong><span style="color: #ffd700;">Klient:</span></strong> Náš torrent klient napr. qBittorrent následne z torrent súboru získa adresy trackerov, ktoré nám vedia poskytnúť zoznam ďalších uživateľov s dátami, ktoré chceme stiahnúť. Následne klient tieto trackery kontaktuje.</li>
+                <li><strong><span style="color: #ffd700;">Tracker:</span></strong> Keď tracker obdrží požiadavku od klienta, vytvorí si zoznam peerov pre daný torrent a uloží do neho IP adresu klienta. Následne vráti klientovi zoznam IP adries ostatných klientov (peerov), ktorý ho rovnakým spôsobom kontaktovali.</li>
+                <li><strong><span style="color: #ffd700;">Peers:</span></strong> Keď klient obdrží zoznam IP adries ostatných peerov, môže s nimi začať nadväzovať spojenia. Po úspešnom spojení začne vzájomná výmena dát.</li>
+            </ol>
+
+            <h2 id="reachability">Pripojiteľnosť</h2>
+            <p>Pretože užívatelia spolu komunikujú priamo, je dôležité aby medzi sebou vedeli vytvoriť spojenie. Medzi užívateľmi sa ale nachádzajú firewally, routery, NAT, atď., ktoré bežne priamemu spojeniu bránia. Nemalú úlohu v tom zohráva aj typ IP adresy, k čomu sa dostanem nižšie. Preto delíme užívateľov do dvoch kategórii, od čoho závisí aj ich schopnosť torrenty využívať:</p>
+            <ul>
+                <li><strong><span style="color: #ffd700;">Aktiv:</span></strong> Je užívateľ ktorého internetové pripojenie a nastavenie siete umožňuje priame spojenie s jeho klientom.</li>
+                <li><strong><span style="color: #ffd700;">Pasiv:</span></strong> Je užívateľ ktorého internetové pripojenie neumožňuje priame spojenie s jeho klientom.</li>
+            </ul>
+
+            <p>Torrent klient dokáže vytvoriť spojenie len voči užívateľovi, ktorý je Aktiv čo znamená že:</p>
+            <ul>
+                <li><strong><span style="color: #ffd700;">Aktiv</span></strong> sa na <strong><span style="color: #ffd700;">Aktiva</span></strong> pripojí hneď.</li>
+                <li><strong><span style="color: #ffd700;">Pasiv</span></strong> sa na <strong><span style="color: #ffd700;">Aktiva</span></strong> pripojí hneď.</li>
+                <li><strong><span style="color: #ffd700;">Aktiv</span></strong> sa na <strong><span style="color: #ffd700;">Pasiva</span></strong> pripojí ale na takéto spojenie sa čaká, pretože ho koordinuje tracker.</li>
+                <li><strong><span style="color: #ffd700;">Pasiv</span></strong> sa na <strong><span style="color: #ffd700;">Pasiva</span></strong> nepripojí nikdy.</li>
+            </ul>
+            <p>Súčastný stav je asi taký, že viac ako <strong><span style="color: #ffd700;">90% uživateľov torrentov sú pasive</span></strong>. To znamená že sa navzájom nespoja a teda používajú torrenty so sotva 10 percentnou úspešnosťou.</p>
+            
+            <h2 id="active">Ako sa stanem Aktivom?</h2>
+            <p>Hlavným predpokladom je získať od internetového poskytovateľa (ISP) <strong><span style="color: #ffd700;">verejnú IP adresu</span></strong>. Bez nej sa Aktivom stať nedá. Po získaní verejnej IP adresy je ešte nutné nastaviť portforward (preposielanie portov) v routery. Router totiž v základnom nastavení blokuje prichádzajúce spojenia zo siete internet. Ak vám ISP verejnú IP neposkytne, potom sa dajú ešte zvážiť alternatívy:</p>
+            <ul>
+                <li>Seedbox</li>
+                <li>VPN s <span style="color: #ffd700;">verejnou IP adresou</span> alebo <span style="color: #ffd700;">portforwardom</span></li>
+            </ul>
+            
+            <h2 id="ip">Čo je IP adresa?</h2>
+            <p><strong><span style="color: #ffd700;">IP adresa</span></strong> je jedinečná adresa v sieti internet, ktorá umožňuje zariadeniam vytvoriť vzájomné spojenie podobne ako napríklad telefónne číslo. Keď s niekym chcete telefonovať, tiež musíte poznať jeho číslo (v našom prípade IP adresu).</p>
+            <p>Internet používa niekoľko druhov IP adries. Od jeho vzniku sa používajú IPv4 adresy (Internet Protokol verzia 4) a túto adresu má každé internetové pripojenie. IPv4 je veľmi starý a bol navrhnutý tak, že umožňuje maximálne 4,3 miliardy jedinečných IP adries. Ale dnes, keď sa ľudská populácia blíži k počtu 8 miliárd je to nedostatočný počet. V skutočnosti sa tieto IP adresy už minuli. Preto vznikol ešte druhý IPv6 protokol. Ten je v štádiu nasádzania a v súčastnosti ho využíva asi len 30% internetových prípojok. IPv4 a IPv6 nie sú navzájom kompatibilné. Sú to v podstate dva nezávislé internety ktoré sa do domácností dostávajú jedným spoločným káblom.</p>
+
+            <h2 id="ipv4">IPv4 adresa</h2>
+            <p>Ako už som, spomenul je súčasťou každého internetového pripojenia. Rozlišujeme hlavne dva <strong><span style="color: #ffd700;">druhy IP adries</span></strong>:</p>
+            <ul>
+                <li><strong><span style="color: #ffd700;">Verejná</span></strong> – Je to adresa, ktorú vám poskytne váš ISP a je v sieti internet jedinečná, čo umožňuje voči nej vytvoriť spojenie z internetu. Takáto adresa je spravidla len vaša. V minulosti bežne takéto IP pridelovali ISP svojim zákazníkom. Nakoľko sa ale adresy už minuli, tak boli zákazníkom odoberané a dnes ich pridelujú buď na vyžiadanie alebo za príplatok.</li>
+                <li><strong><span style="color: #ffd700;">Privátna</span></strong> (zdielaná) – Je to riešenie kedy ISP má verejnú IP adresu na nejakom svojom routry v datacentre a túto adresu zdieľa medzi niekoľkých svojich klientov pomocou techniky zvanej NAT (Network address translation), ktorá spočíva v tom že sa všetka komunikácia prekladá z verejnej IP adresy na privátne IP adresy, ktoré sú použité výhradne vo vnútornej sieti ISP. Takéto adresy nie sú dosiahnuteľné zo siete internet, pretože router ISP nemá ako vedieť, na ktorú klientskú adresu ich má preposielať.</li>
+            </ul>
+            <p><strong><span style="color: #ffd700;">V súčastnosti prevládajú</span></strong> na internetových prípojkách práve <strong><span style="color: #ffd700;">privátne IP adresy</span></strong>.</p>
+
+            <p>Existujú ešte ďalšie dve členenia týchto IP adries ale na fungovanie torrentov nemajú žiaden vplyv. ISP ich ale často používajú na obalamutenie zákazníkov, ktorý sa nevyznajú:<p>
+            <ul>
+                <li><strong><span style="color: #ffd700;">Dynamická adresa</span></strong> – V minulosti ludia dostávali bežne dynamické verejné IP adresy ktoré sa pri reštarte routra zmenili.</li>
+                <li><strong><span style="color: #ffd700;">Statická adresa</span></strong> – V kontexte s dynamickou adresou často ISP ponúkali zákazníkom statickú IP adresu aby sa im pravidelne nemenila a mohli tak na nej prevádzkovať napr. web-server bez strachu že zajtra bude mať zase inú adresu a nebudú sa naň vedieť pripojiť.</li>
+            </ul>
+            <p>Dnes má takmer každé domáce pripojenie router / wifi-router, preto ak máte verejnú IPv4 adresu, musíte ešte zabezpečiť aby router vedel kam má prichádzajúce spojenie zo siete internet preposielať (na aký počítač v domácej sieti). Toto sa nazýva portforward (preposielanie portov). Nastavuje sa priamo v nastaveniach routra. Výrobcovia toto často v nastaveniach nazývajú rôzne. V podstate tam treba zadať tri čísla: Public port, Private port a Private IP. Porty sú zhodné a nájdete ho v nastaveniach torrent klienta. IP adresa je adresa počítača na ktorom torrent klient beží. Keď toto zvládnete, budete sťahovať a zdielať torrenty ako <strong><span style="color: #ffd700;">AKTIV</span></strong>.<p>
+
+
+            <h2 id="ipv6">IPv6 adresa</h2>
+            <p>Je v štádiu implementácie v rámci celej globálnej sieti internet a tak ju má k dispozícii len asi 30% obyvateľstva. Narozdiel od IPv4 sú tieto adresy vždy verejné. Musí sa ale jednať o IPv6 adresu od vašeho ISP. V súčastnosti ak má verejnú IPv4 len asi 10% percent torrentových klientov, tak 30% pokrytie IPv6 adresami môže výrazne zvýšiť vaše šance na pripojiteľnosť. Či máte IPv6 adresu si viete jednoducho overiť napríklad na tomto webe <a href="https://myip.cz/" target="_blank">https://myip.cz/</a>. V prípade že sa vám IPv6 zobrazí, tak ste na dobrej ceste.</p>
+            
+            <p>Na to aby ste boli Aktiv aspoň v IPv6 sieti to ale nestačí. IPv6 bolo navrhnuté tak, aby každé zariadenie malo svoju vlastnú verejnú IP adresu. Preto bývajú routre v základnej konfigurácii nastavené tak, aby blokovali prichádzajúce spojenia. Preto je nutné v routri povoliť prichádzajúce spojenia pre torrent klient. Resp. nastavovať niečo podobné ako portforward, kedy routru poviete na ktoré zariadenie a ktorý port môže prichádzajúce spojenie povoliť.</p>
+        </div>
+
+        <!-- Obsah pre záložku #advance -->
+        <div id="advance" class="tab-content" style="display: none;">
+            <h2>Dobré vedieť</h2>
+            
+            <ul>
+                <li><a href="#ratio" onclick="showAdvanceDetail('ratio'); return false;">Čo je RATIO</a></li>
+                <li><a href="#announce" onclick="showAdvanceDetail('announce'); return false;">Čo je Announcia</a></li>
+                <li><a href="#pid" onclick="showAdvanceDetail('pid'); return false;">Čo je PID</a></li>
+                <li><a href="#bridging" onclick="showAdvanceDetail('bridging'); return false;">Čo je Premostenie</a></li>
+                <li><a href="#seedbox" onclick="showAdvanceDetail('seedbox'); return false;">Čo je Seedbox</a></li>
+                <li><a href="#dht" onclick="showAdvanceDetail('dht'); return false;">Čo je DHT, LSD a PEX</a></li>
+                <li><a href="#torrent-type" onclick="showAdvanceDetail('torrent-type'); return false;">Čo je Verejný a privátny torrent</a></li>
+                <li><a href="#magnetlink" onclick="showAdvanceDetail('magnetlink'); return false;">Čo je Magnetlink</a></li>
+                <li><a href="#upnp" onclick="showAdvanceDetail('upnp'); return false;">Čo je UPnP a DMZ</a></li>
+            </ul>
+
+            <div id="advance-details">
+                <!-- Popis pre RATIO -->
+                <div id="ratio" class="advance-detail" style="display: none;">
+                    <h3>Čo je <span style="color: #ffd700;">Ratio</span>?</h3>
+                    <p>Ratio je pomer medzi množstvom dát, ktoré ste nahrali (upload), a dátami, ktoré ste stiahli (download). V ideálnom prípade by mal byť tento pomer 1:1 alebo vyšší, čo znamená, že ste stiahli a zároveň nahrali rovnaké množstvo dát. Udržanie dobrého pomeru je dôležité najmä na súkromných torrentových trackeroch, kde sa od užívateľov očakáva, že nielen sťahujú, ale aj zdieľajú súbory s ostatnými.</p>
+                </div>
+
+                <!-- Popis pre Announcia -->
+                <div id="announce" class="advance-detail" style="display: none;">
+                    <h3>Čo je <span style="color: #ffd700;">Announcia</span>?</h3>
+                    <p>Announcia je správa, ktorú klient posiela na server trackera, aby ho informoval o stave daného torrentu. Pomocou announcie tracker vie, či ste spustili, ukončili alebo práve sťahujete konkrétny torrent. Tracker používa tieto informácie na aktualizáciu počtu "seederov" a "leecherov" pre daný torrent a taktiež pomocou nej ráta koľko dát ste z daného torrentu stiahli a odoslali.</p>
+                    <div class="image-item"><a href="images/qBittorrent_Announce.png" target="_blank"><img src="images/qBittorrent_Announce.png" class="thumbnail"></a></div>
+                    <br>
+                    <p>Trackery využívajú dva hlavné protokoly na komunikáciu s torrent klientmi:</p>
+                    <ol>
+                        <li><strong><span style="color: #ffd700;">HTTP/HTTPS</span> announcia</strong>:
+                            <ul>
+                                <li>Používa štandardný webový protokol na výmenu informácií.</li>
+                                <li>Je menej efektívna, pretože každá požiadavka zahŕňa väčší objem dát a režijných informácií.</li>
+                                <li><span style="color: #ffd700;">HTTPS</span> announcia ako jediná zabezpečuje šifrovanú komunikáciu s trackerom a chráni vás pred tým, aby tretia strana videla, aké torrenty sťahujete/zdieľate a koľko dát ste preniesli.</li>
+                            </ul>
+                        </li>
+                        <li><strong><span style="color: #ffd700;">UDP</span> announcia</strong>:
+                            <ul>
+                                <li>Efektívnejší protokol navrhnutý špeciálne pre trackery.</li>
+                                <li>Prenáša menší objem dát, čo znižuje záťaž na server aj klienta.</li>
+                                <li>Môže byť blokovaný niektorými sieťami alebo firewallmi.</li>
+                                <li>Je nešifrovaný protokol a prenášané dáta môžu byť ľahko čitateľné.</li>
+                            </ul>
+                        </li>
+                    </ol>
+                </div>
+
+                <!-- Popis pre PID -->
+                <div id="pid" class="advance-detail" style="display: none;">
+                    <h3>Čo je <span style="color: #ffd700;">PID</span>?</h3>
+                    <p>PID je osobný identifikátor, ktorý niektoré trackery používajú na identifikáciu užívateľa. PID slúži na autentifikáciu na súkromných trackeroch a udržuje prehľad o vašom pomere nahrávania a sťahovania. Pomocou PID tracker vie, že torrent sťahujete alebo nahrávate vy a nie iná osoba.</p>
+                    <div class="image-item"><a href="images/qBittorrent_PID.png" target="_blank"><img src="images/qBittorrent_PID.png" class="thumbnail"></a></div>
+                </div>
+
+                <!-- Popis pre Premostenie -->
+                <div id="bridging" class="advance-detail" style="display: none;">
+                    <h3>Čo je <span style="color: #ffd700;">Premostenie</span>?</h3>
+                    <p>Premostenie znamená vytvorenie pripojenia medzi dvoma peer-mi, ktorí by inak nemohli komunikovať priamo (napr. dvaja pasívni klienti). Používa sa na obídenie obmedzení siete, ako sú firewally alebo NAT (Network Address Translation). Keď torrent zdieľa seeder, ktorý je pasívny a tento torrent chce stiahnuť leecher, ktorý je tiež pasívny, vzájomné spojenie nie je možné a prenos súborov sa nezačne. Tzv. premostenie vyžaduje, aby sa k torrentu pripojil tretí klient, ktorý je aktívny. Tento klient začne obsah torrentu sťahovať od seedera a zároveň sa na neho pripojí aj leecher, ktorému bude stiahnutý obsah zdieľať.</p>
+                </div>
+
+                <!-- Popis pre Seedbox -->
+                <div id="seedbox" class="advance-detail" style="display: none;">
+                    <h3>Čo je <span style="color: #ffd700;">Seedbox</span>?</h3>
+                    <p>Seedbox je špeciálny server určený na sťahovanie a zdieľanie torrentov. Je to spravidla platená služba, kde získate vzdialený prístup k torrent klientovi, ktorý beží 24/7 na serveri v dátovom centre. Takýto server má pre klienta vyhradenú určitú kapacitu disku, na ktorý sa torrenty sťahujú. Zákazník sa k tomuto disku vie vzdialene pripojiť a obsah si stiahnuť, napríklad pomocou FTP protokolu. Seedboxy poskytujú vysokorýchlostné pripojenie s verejnou IP adresou, čo znamená, že môžu nahrávať dáta rýchlo a zvyčajne sú neustále online. Sú obľúbené medzi používateľmi, ktorí chcú udržať dobrý pomer na súkromných trackeroch, pretože seedboxy môžu kontinuálne nahrávať dáta pre ostatných používateľov.</p>
+                </div>
+
+                <!-- Popis pre DHT, LPD, PEX -->
+                <div id="dht" class="advance-detail" style="display: none;">
+                    <h3>Čo je <span style="color:hsl( 51, 100%, 50% );"><strong>DHT, LSD a PEX?</strong></span></h3>
+
+                    <p><span style="color:hsl( 51, 100%, 50% );"><strong>DHT</strong></span><strong> (Distributed Hash Table):</strong></p>
+                    <ul>
+                        Je decentralizovaný systém na vyhľadávanie peerov bez potreby centrálneho trackera.
+                        Umožňuje torrent klientom nájsť ďalších peerov aj v prípade, že tracker nie je dostupný.
+                        Tento systém vytvára tabuľku všetkých torrentov a zoznamy peerov, ktorí zdieľajú jednotlivé torrenty. Táto tabuľka sa rozdelí na menšie časti a každý klient si časť z nej uchová. Klienti si potom navzájom zdieľajú informácie z tejto tabuľky, čím sa zabezpečí, že každý klient získa zoznam peerov k torrentu, ktorý chce stiahnuť a môže sa na nich pripojiť.
+                    </ul>
+                    <p><span style="color:hsl( 51, 100%, 50% );"><strong>LSD</strong></span><strong> (Local Peer Discovery):</strong></p>
+                    <ul>
+                        Je metóda na vyhľadávanie peerov v lokálnej sieti (LAN).
+                        Umožňuje torrent klientom navzájom sa nájsť a zahájiť zdieľanie, ak sú pripojení na rovnakú lokálnu sieť, bez potreby trackera alebo DHT.
+                        Tento systém vysiela multicast správy na špeciálnu IP adresu v lokálnej sieti a zisťuje, či sú v sieti iné zariadenia so zhodnými torrentmi.
+                    </ul>
+                    <p><span style="color:hsl( 51, 100%, 50% );"><strong>PEX</strong></span><strong> (Peer Exchange):</strong></p>
+                    <ul>
+                        Je mechanizmus na výmenu informácií o peeroch medzi už pripojenými klientmi.
+                        Má za úlohu zlepšiť konektivitu tým, že klienti si navzájom odporúčajú ďalších peerov ku ktorým sa môžu pripojiť.
+                        Každý klient zdieľa zoznam peerov, ku ktorým je pripojený a tento zoznam šíri medzi ďalšie pripojené klienty.
+                    </ul>
+                    <p>Tieto technológie spolu zvyšujú spoľahlivosť a efektivitu torrent sietí tým, že umožňujú klientom nájsť peerov rôznymi spôsobmi.</p>
+                    <p><span style="color:#9e9e9e;"><strong>Poznámka: </strong></span><span style="color:#9e9e9e;">Tieto technológie sú zapnuté (povolené) len pre verejné torrenty. Privátne torrenty ich majú automaticky vypnuté, inak by nebolo možné zabezpečiť, že tracker bude mať kontrolu nad tým, kto má prístup k torrentom a koľko dát preniesol.</span></p>
+                </div>
+
+                <!-- Popis pre Verejný vs. Privátny torrent -->
+                <div id="torrent-type" class="advance-detail" style="display: none;">
+                    <h3><span style="color:hsl( 51, 100%, 50% );">Verejný vs. Privátny torrent</span></h3>
+
+                    <p>Pri vytváraní *.torrent súboru sa musí vopred definovať či bude torrent verejný alebo privátny.<br>
+                    Rozdiel medzi privátnym a verejným torrent súborom spočíva hlavne v tom, ako je súbor spravovaný a kto má k nemu prístup.</p>
+
+                    <p><span style="color:hsl( 51, 100%, 50% );"><strong>Verejný torrent súbor</strong></span> je voľne dostupný pre kohokoľvek. Ak ho stiahnete, môžete ho používať bez registrácie alebo špeciálneho povolenia. Tento typ torrentu je často hosťovaný na verejných trackeroch, ktoré sú otvorené pre všetkých používateľov. Na vyhľadanie peerov využíva verejný torrent technológie ako DHT, PEX a LSD, ktoré zlepšujú šírenie súborov, pretože klienti si sami medzi sebou vymieňajú informácie o ďalších peeroch.</p>
+
+                    <p><span style="color:hsl( 51, 100%, 50% );"><strong>Privátny torrent súbor</strong></span> je naopak dostupný len registrovaným používateľom na špecifických, uzavretých trackeroch. Tento súbor obsahuje špeciálne nastavenie, ktoré zakazuje využívanie DHT, PEX a LSD, čím sa zabezpečuje, že peeri sú získavaní iba cez privátny tracker. Tento spôsob zabraňuje tomu, aby sa torrent súbor šíril mimo komunity, ktorá má k nemu prístup. Privátne trackery navyše často sledujú, kto sťahuje a zdieľa súbory, a vyžadujú, aby používatelia zachovávali dobrý pomer medzi sťahovaním a zdieľaním (tzv. seed/leech ratio).</p>
+
+                    <p><strong>Kľúčový rozdiel:</strong> Privátne torrent súbory sú viac kontrolované a bezpečnejšie, pričom obmedzujú prístup a šírenie. Verejné torrent súbory sú otvorené pre všetkých a nie je na nich vyvíjaný tlak na aktívne zdieľanie.</p>
+                </div>
+
+                <!-- Popis pre magnetlink -->
+                <div id="magnetlink" class="advance-detail" style="display: none;">
+                    <h3>Čo je <span style="color:hsl( 51, 100%, 50% );">Magnetlink</span></h3>
+                    <p><span style="color:hsl( 51, 100%, 50% );"><strong>Magnetlink</strong> </span>je špeciálny formát odkazu, ktorý slúži na sťahovanie torrentov bez potreby samostatného *.torrent súboru.</p>
+                    <div style="background-color: rgba(0, 0, 0, 0.5); color: #ffffff; padding: 15px; border-radius: 2px; margin: 10px auto; font-family: monospace; text-align: center;">
+                        <a href="magnet:?xt=urn:btih:4a3f5e08bcef825718eda30637230585e3330599&amp;dn=ubuntu-24.04.1-desktop-amd64.iso&amp;tr=https%3A%2F%2Ftorrent.ubuntu.com%2Fannounce&amp;tr=https%3A%2F%2Fipv6.torrent.ubuntu.com%2Fannounce&amp;tr=http%3A%2F%2Ftracker.opentrackr.org%3A1337%2Fannounce&amp;tr=http%3A%2F%2Fw7tpbzncbcocrqtwwm3nezhnnsw4ozadvi2hmvzdhrqzfxfum7wa.b32.i2p%2Fa" style="color: #ffd700; text-decoration: none;">
+                            <code>magnet:?xt=urn:btih:4a3f5e08bcef825718eda30637230585e3330599&amp;dn=ubuntu-24.04.1-desktop-amd64.iso</code>
+                        </a>
+                    </div>
+
+                    <p><strong><span style="color: #ffd700;">Ako funguje</span>?</strong></p>
+                    <p>Magnetlink obsahuje informácie o torrente, ako je jeho <strong>hash</strong>, názov a ďalšie voliteľné údaje. Tento hash umožňuje torrent klientovi vyhľadať potrebné údaje priamo od peerov v sieti pomocou technológií ako <strong>DHT</strong>. Vďaka tomu sa obídete bez centrálneho trackera alebo manuálneho sťahovania .torrent súboru.</p>
+
+                    <p><strong>Prečo sa používa?</strong></p>
+                    <ul>
+                        <li><strong>Jednoduchosť:</strong> Stačí kliknúť na odkaz a váš torrent klient začne vyhľadávať peerov.</li>
+                        <li><strong>Efektivita:</strong> Magnetlink eliminuje potrebu hostovať *.torrent súbory na serveri, čím šetrí miesto a znižuje náklady.</li>
+                    </ul>
+
+                    <p><strong>V čom sa líši od .torrent súboru?</strong></p>
+                    <ul>
+                        <li>*.torrent súbor obsahuje podrobné informácie o torrente vrátane zoznamu trackerov, veľkosti súboru a štruktúry dát.</li>
+                        <li>Magnetlink obsahuje iba hash a spolieha sa na DHT a peery, aby zistil ďalšie podrobnosti.</li>
+                    </ul>
+
+                    <p>Magnetlinky sú obľúbené pre svoju jednoduchosť a flexibilitu, hlavne na verejných torrent stránkach, kde sa minimalizuje potreba hostovania veľkého množstva súborov.</p>
+                    <p><span style="color: #ffd700;">Je nutné</span> ale <span style="color: #ffd700;">podotknúť</span>, že aj keď dáte sťahovať torrent pomocou magnetlinku, klient stále potrebuje metadáta, ktoré sa nachádzajú v *.torrent súbore. Klient preto musí najprv vyhľadať peerov, ktorý majú tieto metadáta a následne ich stiahnuť. Toto však môže celý proces sťahovania značne predĺžiť hlavne ak ma daný torrent málo peerov alebo prevažne pasivných peerov.</p>
+                </div>
+
+                <!-- Popis pre UPnP a DMZ -->
+                <div id="upnp" class="advance-detail" style="display: none;">
+                    <h3>Čo je <span style="color:hsl( 51, 100%, 50% );">UPnP</span>?</h3>
+
+                    <p><span style="color:hsl( 51, 100%, 50% );"><strong>UPnP v torrent klientovi</strong></span> je funkcia, ktorá umožňuje automatickú konfiguráciu portov na routeri pre optimálne fungovanie sťahovania a zdieľania torrentov. Využíva protokol <strong>Universal Plug and Play</strong> (UPnP), ktorý umožňuje zariadeniam v sieti komunikovať a nastavovať sieťové parametre bez zásahu používateľa.</p>
+
+                    <p><strong><span style="color: #ffd700;">Na čo slúži UPnP</span> v torrent klientovi?</strong></p>
+                    <ol>
+                        <li><strong>Automatické otvorenie portov:</strong> UPnP umožňuje torrent klientovi otvoriť potrebné porty na routeri, aby bolo možné prijímať prichádzajúce pripojenia. To je dôležité pre správne fungovanie sietí peer-to-peer, kde je vyžadovaná obojsmerná komunikácia.</li>
+                        <li><strong>Zlepšenie pripojenia:</strong> Bez otvorených portov môže byť klient obmedzený na pasívne spojenia, čo môže znížiť počet dostupných peerov a spomaliť rýchlosť sťahovania alebo zdieľania. UPnP zaručuje, že klient bude schopný aktívne nadväzovať pripojenia s ostatnými používateľmi.</li>
+                        <li><strong>Jednoduchosť pre používateľa:</strong> Umožňuje užívateľom, ktorí nemajú technické znalosti, vyhnúť sa manuálnemu nastavovaniu portov na routeri (tzv. port forwarding). Torrent klient sa postará o všetko automaticky.</li>
+                    </ol>
+
+                    <p><strong><span style="color: #ffd700;">Ako funguje</span>?</strong></p>
+                    <ul>
+                        <li>Keď je funkcia UPnP povolená, torrent klient požiada router o otvorenie špecifického portu.</li>
+                        <li>Router následne tento port automaticky nakonfiguruje a presmeruje komunikáciu z internetu priamo na torrent klient.</li>
+                    </ul>
+
+                    <p><strong>Výhody:</strong></p>
+                    <ul>
+                        <li><strong>Pohodlie:</strong> Netreba manuálne nastavovať port forwarding na routeri.</li>
+                        <li><strong>Zlepšená konektivita:</strong> Torrent klient dokáže nadviazať viac spojení, čo môže zrýchliť sťahovanie a zdieľanie súborov.</li>
+                    </ul>
+
+                    <p><strong>Nevýhody:</strong></p>
+                    <ul>
+                        <li><strong>Bezpečnostné riziká:</strong> Automatické otváranie portov môže zvýšiť riziko, ak je sieť infikovaná škodlivým softvérom.</li>
+                        <li><strong>Závislosť na routeri:</strong> Nie všetky routery podporujú UPnP alebo ho majú vo východzom nastavení zapnuté.</li>
+                    </ul>
+
+                    <p><strong><span style="color: #ffd700;">Kedy používať</span> UPnP v torrent klientovi?</strong></p>
+                    <ul>
+                        <li>Ak nemáte prístup k routeru na manuálne nastavenie portov.</li>
+                        <li>Ak nie ste oboznámení so sieťovými nastaveniami a chcete rýchlo dosiahnuť plnú funkčnosť torrent klienta.</li>
+                        <li>Ak neviete správne nakonfigurovať port-forwarding.</li>
+                    </ul>
+
+                    <p><span style="color: #ffd700;">Ak však máte pokročilé znalosti, je často bezpečnejšie manuálne nastaviť port-forwarding namiesto použitia UPnP.</span></p>
+                    <br>
+                    <p style="text-align:center;">Zapnutie UPnP v nastaveniach routra.</p>
+                    <div class="image-gallery">
+                        <div class="image-item">
+                            <a href="images/AX1800_upnp.png" target="_blank"><img src="images/AX1800_upnp.png" class="thumbnail" alt="Zapnutie UPnP na routry AX1800"></a>
+                            <p>Zapnutie UPnP na routry AX1800</p>
+                        </div>
+                        <div class="image-item">
+                            <a href="images/WR841N_upnp.png" target="_blank"><img src="images/WR841N_upnp.png" class="thumbnail" alt="Zapnutie UPnP na routry WR841N"></a>
+                            <p>Zapnutie UPnP na routry WR841N</p>
+                        </div>
+                    </div>
+                    <br>
+                    <p style="text-align:center;">Zapnutie UPnP v nastaveniach klienta.</p>
+                    <div class="image-gallery">
+                        <div class="image-item">
+                            <a href="images/qBittorrent_UPnP.png" target="_blank"><img src="images/qBittorrent_UPnP.png" class="thumbnail" alt="Zapnutie UPnP na qBittorrente"></a>
+                            <p>Zapnutie UPnP na qBittorrente</p>
+                        </div>
+                        <div class="image-item">
+                            <a href="images/uTorrent_UPnP.png" target="_blank"><img src="images/uTorrent_UPnP.png" class="thumbnail" alt="Zapnutie UPnP na uTorrente"></a>
+                            <p>Zapnutie UPnP na uTorrente</p>
+                        </div>
+                    </div>
+
+                    <!-- Popis pre DMZ -->
+                    <div id="dmz">
+                        <h3>Čo je <span style="color:hsl( 51, 100%, 50% );">DMZ</span>?</h3>
+
+                        <p><span style="color:hsl( 51, 100%, 50% );">DMZ (Demilitarizovaná zóna)</span> je sieťová funkcia routera, ktorej účelom je preposielať všetky prichádzajúce spojenia zo siete internet (WAN) na jedno konkrétne zariadenie v lokálnej sieti (LAN). Ide o podobný princíp ako port-forwarding, avšak s rozdielom, že port-forwarding presmeruje iba komunikáciu smerujúcu na konkrétny port, zatiaľ čo DMZ presmeruje všetku sieťovú prevádzku na jedno konkrétne zariadenie v LAN. Toto zariadenie sa následne stáva prístupné zo siete internet na všetkých portoch, resp. všetky služby, ktoré sú na danom zariadení (PC), a ktoré umožňujú komunikáciu cez sieť, sú dostupné aj zo vzdialeného internetu. Na rozdiel od port-forwardingu sa v prípade DMZ nastavuje iba IP adresa cieľového zariadenia, na ktoré bude komunikácia smerovaná.</p>
+                        <br>
+                        <p><strong>Výhody nastavenia DMZ:</strong></p>
+                        <ul>
+                            <li><strong>Zlepšená sieťová konektivita</strong>: DMZ zabezpečuje, že všetky porty sú otvorené, čo môže výrazne zlepšiť prístup k službám, ako sú torrenty, online hranie hier a podobne.</li>
+                            <li><strong>Jednoduchšie riešenie problémov s NAT a portami</strong>: Namiesto ručného nastavovania port-forwardingu stačí iba vybrať jedno zariadenie a nastaviť ho ako cieľ DMZ.</li>
+                        </ul>
+                        <p><strong>Nevýhody nastavenia DMZ:</strong></p>
+                        <ul>
+                            <li><strong>Bezpečnostné riziká</strong>: Zariadenie umiestnené v DMZ je vystavené prístupu zvonka, čo znamená vysoké riziko útokov.</li>
+                            <li><strong>Zníženie bezpečnosti celej siete</strong>: Všetka sieťová prevádzka je presmerovaná na jedno zariadenie, čo môže oslabiť bezpečnostné zásady.</li>
+                        </ul>
+                        <p><span style="color: #ffd700;">DMZ by sa nemalo používať na zariadenia ako počítače a podobne</span>, ktoré môžu byť ohrozené zvonka. Táto funkcia je vhodná iba v špecifických prípadoch, ako napríklad keď máte v sieti dva routery za sebou a nechcete nastavovať port-forwarding na oboch. V takom prípade nastavíte na prvom routeri, ktorý je pripojený k internetu, DMZ s adresou druhého routera. Na druhom routeri potom nastavíte port-forwarding na konkrétne zariadenia podľa potreby. Týmto spôsobom môžete vyhnúť duplicite nastavovania smerovania portov.</p>
+                        <br>
+                        <p style="text-align:center;">Zapnutie DMZ v nastaveniach routra.</p>
+                        <div class="image-gallery">
+                            <div class="image-item">
+                                <a href="images/AX1800_DMZ.png" target="_blank"><img src="images/AX1800_DMZ.png" class="thumbnail" alt="Zapnutie DMZ na routry AX1800"></a>
+                                <p>Zapnutie DMZ na routry AX1800</p>
+                            </div>
+                            <div class="image-item">
+                                <a href="images/WR841N_DMZ.png" target="_blank"><img src="images/WR841N_DMZ.png" class="thumbnail" alt="Zapnutie DMZ na routry WR841N"></a>
+                                <p>Zapnutie DMZ na routry WR841N</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Obsah pre záložku #howto -->
+        <div id="howto" class="tab-content" style="display: none;">
+            <h2>Návody</h2>
+            
+            <ul>
+                <li><a href="#portforward" onclick="showHowtoDetail('portforward'); return false;">Ako nastaviť portforward</a></li>
+                <li><a href="#encryption" onclick="showHowtoDetail('encryption'); return false;">Ako nastaviť p2p šifrovanie</a></li>
+            </ul>
+
+            <div id="howto-details">
+                <!-- Popis pre Portforward -->
+                <div id="portforward" class="howto-detail" style="display: none;">
+                    <h3>Ako nastaviť <span style="color: #ffd700;">portforward</span>:</h3>
+                    <ol>
+                        <li>
+                            <h3>Zistite číslo portu používaného qBittorrentom</h3>
+                            <div class="image-item"><a href="images/qBittorrent_Port.png" target="_blank"><img src="images/qBittorrent_Port.png" class="thumbnail"></a></div>
+                            <ul>
+                                <li>Otvorte qBittorrent.</li>
+                                <li>Prejdite na Nástroje (Tools) > Možnosti (Options).</li>
+                                <li>V časti Spojenie (Connection) nájdite Port pre prichádzajúce spojenia (Port used for incoming connections). Číslo portu si zapamätajte alebo si ho zapíšte (napr. 8999).</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <h3>Prihláste sa do administračného rozhrania routera TP-Link</h3>
+                                <div class="image-item"><a href="images/AX1800_login.png" target="_blank"><img src="images/AX1800_login.png" class="thumbnail"></a></div>
+                                <ul>
+                                    <li>Otvorte webový prehliadač a do adresného riadku zadajte IP adresu routera. Typická adresa pre TP-Link je <strong>192.168.0.1</strong> alebo <strong>192.168.1.1</strong>. (Skontrolujte presnú adresu v návode k routeru alebo na spodnej strane zariadenia).</li>
+                                    <li>Prihláste sa pomocou mena a hesla. Predvolené prihlasovacie údaje bývajú často <strong>admin/admin</strong> (ak ste ich nezmenili).</li>
+                                </ul>
+                        </li>
+                        <li>
+                            <h3>Nastavte port forwarding</h3>
+                                <ul>
+                                    <div class="image-item"><a href="images/AX1800_portforwarding.png" target="_blank"><img src="images/AX1800_portforwarding.png" class="thumbnail"></a> <a href="images/WR841N_portforwarding.png" target="_blank"><img src="images/WR841N_portforwarding.png" class="thumbnail"></a></div>
+                                    <li>V administračnom rozhraní routera vyhľadajte sekciu pre Port Forwarding alebo Virtual Servers. Na niektorých TP-Link routeroch môže byť v časti Forwarding > Virtual Servers.</li>
+
+                                    <div class="image-item"><a href="images/AX1800_forward_details.png" target="_blank"><img src="images/AX1800_forward_details.png" class="thumbnail"></a> <a href="images/WR841N_forward_details.png" target="_blank"><img src="images/WR841N_forward_details.png" class="thumbnail"></a></div>
+                                    <li>Kliknite na Pridať (Add) alebo Vytvoriť novú pravidlo (Create a New Rule).</li>
+
+                                    <li>Vyplňte formulár:
+                                        <ul>
+                                            <li><strong><span style="color: #ffd700;">Service Port:</span></strong> Zadajte číslo portu, ktorý používa qBittorrent (napr. 8999).</li>
+                                            <li><strong><span style="color: #ffd700;">Internal Port:</span></strong> Zadajte rovnaké číslo portu ako pre Service Port (napr. 8999).</li>
+                                            <li><strong><span style="color: #ffd700;">IP Address:</span></strong> Zadajte IP adresu počítača, na ktorom beží qBittorrent. Túto adresu nájdete na počítači:
+                                                <ul>
+                                                    <a href="images/ipconfig.png" target="_blank"><img src="images/ipconfig.png" class="thumbnail"></a>
+                                                    <li><strong>V systéme Windows:</strong> Otvorte Príkazový riadok (Command Prompt) a zadajte ipconfig. IP adresa bude zobrazená vedľa položky IPv4 Address.</li>
+                                                    <a href="images/ifconfig.png" target="_blank"><img src="images/ifconfig.png" class="thumbnail"></a>
+                                                    <li><strong>V systéme macOS alebo Linux:</strong> Otvorte terminál a zadajte ifconfig alebo ip a.</li>
+                                                </ul>
+                                            <li><strong><span style="color: #ffd700;">Protocol:</span></strong> Vyberte TCP/UDP (alebo Both, ak je možnosť).</li>
+                                            <li><strong><span style="color: #ffd700;">Status:</span></strong> Nastavte na Enabled.</li>
+                                        </ul>
+                                    </li>
+
+                                    <li>Uložte nastavenia kliknutím na Save alebo Apply.</li>
+                                </ul>
+                        </li>
+                        <li>
+                            <h3>Reštartujte router (voliteľné)</h3>
+                                <ul>
+                                    <li>Ak router hneď neaplikuje zmeny, reštartujte ho.</li>
+                                </ul>
+                        </li>
+                </div>
+
+                <!-- Popis pre P2P šifrovanie -->
+                <div id="encryption" class="howto-detail" style="display: none;">
+                    <h3>Ako nastaviť <span style="color: #ffd700;">p2p šifrovanie</span>:</h3>
+
+                    <p>Z bezpečnostných dôvodov je žiadané, aby spojenie medzi klientmi bolo šifrované. Aby tretie strany, ako internetový operátor a každý po ceste, nevideli aké torrenty a aké množstvá dát prenášate.</p>
+
+                    <p><strong>Návod pre </strong><span style="color: #ffd700;"><strong>qBittorrent</strong></span><strong>:</strong></p>
+                    <p>Spustíme qBittorrent a zvolíme <strong><span style="text-decoration: underline;">Nástroje &gt; Možnosti</span></strong>. Tu vyberieme <strong><span style="text-decoration: underline;">Bittorrent</span></strong> a položku <strong><span style="text-decoration: underline;">Režim šifrovania</span></strong> zmeníme na <span style="color:hsl(51,100%,50%);"><strong>Vyžadovať šifrovanie</strong></span>. Uložíme zmeny.</p>
+                    <div class="image-item">
+                        <a href="images/qBittorrent_Encryption.png" target="_blank"><img src="images/qBittorrent_Encryption.png" class="thumbnail" alt="Zapnutie šifrovania v qBittorrente"></a>
+                    </div>
+                    <br>
+
+                    <p><strong>Návod pre </strong><span style="color: #ffd700;"><strong>uTorrent</strong></span><strong>:</strong></p>
+                    <p>Spustíme uTorrent a zvolíme <strong><span style="text-decoration: underline;">Nastavenia &gt; Možnosti</span></strong>. Tu vyberieme <strong><span style="text-decoration: underline;">BitTorrent</span></strong> a v sekcii <strong><span style="text-decoration: underline;">Kódovanie prenosu</span></strong> zvolíme odchádzajúce na <span style="color:hsl(51,100%,50%);"><strong>Vynútené</strong></span>. Položku “Povoliť nekódované prichádzajúce spojenia” odporúčam <span style="color:hsl(51,100%,50%);">vypnúť</span>. Uložíme zmeny.</p>
+                    <div class="image-item">
+                        <a href="images/uTorrent_Encryption.png" target="_blank"><img src="images/uTorrent_Encryption.png" class="thumbnail" alt="Zapnutie šifrovania v uTorrente 2.2.1"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Obsah pre záložku #downloads -->
+        <div id="downloads" class="tab-content" style="display: none;">
+            <h2>Na stiahnutie</h2>
+            <p>Odkazy na sťahovanie klientov torrentu, odporúčané stránky a ďalšie súbory.</p>
+
+            <p>qBittorrent: <a href="https://www.fosshub.com/qBittorrent.html" target="_blank">Online</a> / <a href="downloads/qbittorrent_5.0.1_qt6_lt20_x64_setup.exe" target="_blank">Offline</a></p>
+            <p>uTorrent 2.2.1: <a href="downloads/uTorrent221.exe" target="_blank">Offline</a></p>
+        </div>
+
+        <div class="note">
+        </div>
+    </div>
+
+    <div class="note">
+    </div>
+</body>
+</html>
